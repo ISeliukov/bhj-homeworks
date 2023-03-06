@@ -11,32 +11,40 @@ let rightbtn = mas1[0];
 let pict = document.getElementsByClassName("slider__item");
 mas1 = Array.from(pict);
 
-let curpict = 0;
-
 let OnClickFuncLeft = function() {
-    let elem1 = mas1[curpict];
-    elem1.className = "slider__item";
-    if(curpict > 0) {
-        curpict--;
+    let res = mas1.findIndex(function(item) {
+        return item.className.includes("slider__item_active");
+    });
+    if(res >= 0) {
+      let elem1 = mas1[res];
+      elem1.className = "slider__item";
+      if(res > 0) {
+        res--;
+      }
+      else {
+        res = mas1.length - 1;
+      }
+      elem1 = mas1[res];
+      elem1.className += " slider__item_active";
     }
-    else {
-        curpict = mas1.length - 1;
-    }
-    elem1 = mas1[curpict];
-    elem1.className += " slider__item_active";
 }
 
 let OnClickFuncRight = function() {
-    let elem1 = mas1[curpict];
-    elem1.className = "slider__item";
-    if(curpict < mas1.length - 1) {
-        curpict++;
+    let res = mas1.findIndex(function(item) {
+        return item.className.includes("slider__item_active");
+    });
+    if(res >= 0) {
+      let elem1 = mas1[res];
+      elem1.className = "slider__item";
+      if(res < mas1.length - 1) {
+        res++;
+      }
+      else {
+        res = 0;
+      }
+      elem1 = mas1[res];
+      elem1.className += " slider__item_active";
     }
-    else {
-        curpict = 0;
-    }
-    elem1 = mas1[curpict];
-    elem1.className += " slider__item_active";
 }
 
 leftbtn.onclick = OnClickFuncLeft;

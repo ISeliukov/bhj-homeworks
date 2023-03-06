@@ -7,7 +7,12 @@ let OnClickFunc = function() {
     let elem1 = this.nextElementSibling ;
     if(elem1 != null) {
         if(elem1.className.includes("menu_sub")) {
-          elem1.className = elem1.className + " menu_active";
+            if(!elem1.className.includes("menu_active")) {
+                elem1.className = elem1.className + " menu_active";
+            }
+            else {
+                elem1.className = "menu menu_sub";
+            }
         }
     }
     let atr1 = this.getAttribute("href");

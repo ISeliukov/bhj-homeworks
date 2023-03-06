@@ -1,33 +1,28 @@
-let elem = document.getElementById("modal_main");
-let orig = elem.className;
-
-let elem1 = document.getElementsByClassName("modal__close");
+let elem1 = document.getElementsByClassName("modal__close_times");
 mas1 = [];
 mas1 = Array.from(elem1);
 
-let elem3 = mas1[0];
-let elem4 = mas1[2];
+let funcClick = function() {
+    let elem = this.closest(".modal");
+    elem.className = "modal modal__close";
+}
+
+for(let i = 0; i < mas1.length; i++) {
+    mas1[i].onclick = funcClick;
+}
 
 elem1 = document.getElementsByClassName("show-success");
 mas1 = Array.from(elem1);
-let elem5 = mas1[0];
+let elem_good = mas1[0];
 
-let elem2 = document.getElementById("modal_success");
-let orig2 = elem2.className;
-
-let FuncClick = function() {
-    elem.className = orig + " modal__close";
-}
-let FuncClick1 = function() {
-    elem2.className = orig2 + " modal_active";
-}
-let FuncClick2 = function() {
-    FuncClick();
-    elem2.className = orig2 + " modal__close";
+let funcClickSucc = function() {
+    let elem = this.closest(".modal");
+    elem.className = "modal modal__close";
+    elem_Succ.className = "modal modal_active";
 }
 
-elem.className = orig + " modal_active";
+elem_good.onclick = funcClickSucc;
 
-elem3.onclick = FuncClick;
-elem4.onclick = FuncClick2;
-elem5.onclick = FuncClick1;
+let elem_main = document.getElementById("modal_main");
+elem_main.className += " modal_active";
+let elem_Succ = document.getElementById("modal_success");
