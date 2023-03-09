@@ -15,8 +15,19 @@ class Game {
     this.winsElement.textContent = 0;
     this.lossElement.textContent = 0;
   }
+  
+  OnEvent(e) {
+      let simv = this.currentSymbol;
+      if(simv.textContent.toUpperCase() == e.key.toUpperCase()) {
+          this.success();
+      }
+      else {
+          this.fail();
+      }
+  }
 
-  registerEvents() {
+    registerEvents() {
+      document.addEventListener('keyup', (e) => { this.OnEvent(e) });
     /*
       TODO:
       Написать обработчик события, который откликается
