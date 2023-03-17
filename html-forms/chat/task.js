@@ -10,7 +10,7 @@ mmesag = ["Добрый день, мы ещё не проснулись. Поз�
           "Кто тут?",  "Нихт ферштейн", "Да ну нафиг!",];
 
 let onTypeChat = function(elem, e) {
-    if((e.keyCode == 13) && (elem.value != "")) {
+    if((e.keyCode == 13) && (elem.value.trim() != "")) {
       let now = new Date();
       date1 = now.getHours() + ":" + now.getMinutes();
       messages.innerHTML += `
