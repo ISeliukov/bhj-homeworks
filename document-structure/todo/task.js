@@ -5,24 +5,24 @@ form.onsubmit = (e) => {e.preventDefault()};
 let list = document.getElementById("tasks__list");
 
 let onClick = function() {
-    this.remove();
+    let elem = this.closest(".task");
+    elem.remove();
 }
 
 let onTypeChat = function(elem, e) {
-
-    if((e.keyCode == 13) && (inp.value.trim() != "")) {
-        let elem1 = '<div class="task">';
-        elem1 +='<div class="task__title">';
-        elem1 += inp.value.trim();
-        elem1 +='</div> <a href="#" class="task__remove">&times;</a> </div> ';
+    if(inp.value.trim() != "") {
+        let elem1 = '<div class="task">'+
+                    '<div class="task__title">'+ inp.value.trim() +
+                    '</div> <a href="#" class="task__remove">&times;</a> </div> ';
         list.insertAdjacentHTML("afterEnd", elem1);
-        list.nextElementSibling.onclick = onClick;
+        let elem = list.nextElementSibling.childNodes[2];
+        elem.onclick = onClick;
+        inp.value = "";
     }
-
     e.preventDefault();
 }
 
-form.addEventListener('keyup', (e) => {
+form.addEventListener('click', (e) => {
     onTypeChat(form, e);
 });
 

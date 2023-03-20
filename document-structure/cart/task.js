@@ -4,66 +4,48 @@ let masinc = Array.from(document.querySelectorAll(".product__quantity-control_in
 let masdec = Array.from(document.querySelectorAll(".product__quantity-control_dec"));
 let masadd = Array.from(document.querySelectorAll(".product__add"));
 
-let GetQuantElem = function(elem) {
-    let val = 0;
-    for(let node of elem.childNodes) {
-        if(!node.nodeName.includes("text")) {
-            if(node.className.includes("product__quantity-value")) {
-                val = node;
-                break;
-            }
-        }
-    }
-    return val;
+let getQuantElem = function(elem) {
+    let quantElem = Array.from(elem.childNodes).find((item) => {
+        return !item.nodeName.includes("text") && !item.nodeName.includes("comment") &&
+               item.className.includes("product__quantity-value");
+    });
+    return quantElem;
 }
 
-let GetQuant = function(elem) {
+let getQuant = function(elem) {
     let contr = elem.closest(".product__quantity-controls");
-    return GetQuantElem(contr);
+    return getQuantElem(contr);
 }
 
 let onClickQuantInc = function(elem, e) {
-    val = GetQuant(elem);
+    val = getQuant(elem);
     val.textContent = (Number(val.textContent) + 1).toString();
 }
 
 let onClickQuantDec = function(elem, e) {
-    val = GetQuant(elem);
-    if(Number(val.textContent > 0)) {
+    val = getQuant(elem);
+    if(Number(val.textContent > 1)) {
       val.textContent = (Number(val.textContent) - 1).toString();
     }
 }
 
 let onClickAdd = function(elem, e) {
-    let val = GetQuantElem(elem.previousElementSibling);
+    let val = getQuantElem(elem.previousElementSibling);
     let prod = elem.closest(".product");
-    prod1 = null;
-    for(node of cart.childNodes) {
-        if(!node.nodeName.includes("text") && !node.nodeName.includes("comment")) {
-            if(node.getAttribute("data-id") == prod.getAttribute("data-id")) {
-                prod1 = node;
-                break;
-            }
-        }
-    }
-    if(prod1 == null) {
-        let elem1 = '<div class="cart__product" data-id="' + prod.getAttribute("data-id") + '">';
+    let productInCard = Array.from(cart.childNodes).find((item) => {
+        return !item.nodeName.includes("text") && !item.nodeName.includes("comment") &&
+                item.getAttribute("data-id") == prod.getAttribute("data-id");
+    });
+    if(productInCard == null) {
         let src = prod.childNodes[3];
-        elem1 +='<img class="cart__product-image" src="' + src.getAttribute("src") +'">';
-        elem1 +='<div class="cart__product-count">';
-        elem1 += val.textContent;
-        elem1 +='</div>';
+        let elem1 = '<div class="cart__product" data-id="' + prod.getAttribute("data-id") + '">' +
+                    '<img class="cart__product-image" src="' + src.getAttribute("src") +'">' +
+                    '<div class="cart__product-count">' + val.textContent + '</div>';
         cart.insertAdjacentHTML("beforeEnd", elem1);
     }
     else {
-      for(node of prod1.childNodes) {
-          if(!node.nodeName.includes("text") && !node.nodeName.includes("comment")) {
-              if(node.className.includes("cart__product-count")) {
-                node.textContent = val.textContent;
-                break;
-              }
-          }
-      }
+        let count = productInCard.childNodes[1];
+        count.textContent = (Number(count.textContent) + Number(val.textContent)).toString();
     }
 }
 
